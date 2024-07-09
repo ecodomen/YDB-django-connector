@@ -27,7 +27,7 @@ class DatabaseWrapper(BaseDatabaseWrapper):
         return ydb.Driver(endpoint=conn_params['connection_string'], database='/path/to/database')
 
     def init_connection_state(self):
-        pass  # Здесь могут быть действия для инициализации состояния соединения
+        pass  # Добавить действия для инициализации состояния соединения
 
     def create_cursor(self):
         return self.connection.cursor()
