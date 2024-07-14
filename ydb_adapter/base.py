@@ -12,22 +12,50 @@ class DatabaseWrapper(BaseDatabaseWrapper):
     vendor = 'ydb'
     display_name = 'YDB'
 
-    def __init__(self, settings_dict, alias='default'):
-        super().__init__(settings_dict, alias)
+    # Определение классов для использования в обертке
+    # TODO: необходимо реализовать все остальные классы
+    Database = ydb
+    # SchemaEditorClass = DatabaseSchemaEditor
+    # CreationClass = DatabaseCreation
+    # FeaturesClass = DatabaseFeatures
+    # IntrospectionClass = DatabaseIntrospection
+    # OperationsClass = DatabaseOperations
+    # ClientClass = DatabaseClient
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.connection = None
-        self.settings_dict = settings_dict
 
     def get_connection_params(self):
+        # Получение параметров соединения из настроек
+        settings_dict = self.settings_dict
         return {
-            "connection_string": self.settings_dict['NAME'],
+            "endpoint": settings_dict['HOST'],
+            "database": settings_dict['NAME']
         }
 
     def get_new_connection(self, conn_params):
-        return ydb.Driver(endpoint=conn_params['connection_string'], database='/path/to/database')
+        # Создание нового соединения с YDB
+        return ydb.Driver(endpoint=conn_params['endpoint'], database=conn_params['database'])
 
     def init_connection_state(self):
-        pass  # Добавить действия для инициализации состояния соединения
+        # Инициализация состояния соединения
+        if not self.connection.is_connected:
+            self.connection.connect()
 
     def create_cursor(self):
+        # Создание курсора для выполнения запросов
         return self.connection.cursor()
+
+    def is_usable(self):
+        # Проверка, является ли соединение используемым
+        try:
+            self.connection.ping()
+            return True
+        except ydb.Error:
+            return False
+
+    def close(self):
+        # Закрытие соединения с базой данных
+        if self.connection is not None:
+            self.connection.close()
