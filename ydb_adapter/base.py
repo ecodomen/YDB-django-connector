@@ -7,6 +7,8 @@ from django.db.backends.base.operations import BaseDatabaseOperations
 from django.db.backends.base.schema import BaseDatabaseSchemaEditor
 import ydb
 
+from ydb_adapter.features import DatabaseFeatures
+
 
 class DatabaseWrapper(BaseDatabaseWrapper):
     vendor = 'ydb'
@@ -15,12 +17,12 @@ class DatabaseWrapper(BaseDatabaseWrapper):
     # Определение классов для использования в обертке
     # TODO: необходимо реализовать все остальные классы
     Database = ydb
-    # SchemaEditorClass = DatabaseSchemaEditor
-    # CreationClass = DatabaseCreation
-    # FeaturesClass = DatabaseFeatures
-    # IntrospectionClass = DatabaseIntrospection
-    # OperationsClass = DatabaseOperations
-    # ClientClass = DatabaseClient
+    # schema_editor_class = DatabaseSchemaEditor
+    # creation_class = DatabaseCreation
+    features_class = DatabaseFeatures
+    # introspection_class = DatabaseIntrospection
+    # operations_class = DatabaseOperations
+    # client_class = DatabaseClient
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
