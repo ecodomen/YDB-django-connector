@@ -16,11 +16,11 @@ class DatabaseWrapper(BaseDatabaseWrapper):
     # Определение классов для использования в обертке
     # TODO: необходимо реализовать все остальные классы
     Database = ydb
-    # schema_editor_class = DatabaseSchemaEditor
+    # schema_editor_class = DatabaseSchemaEditor Serge
     # creation_class = DatabaseCreation
     features_class = DatabaseFeatures
-    # introspection_class = DatabaseIntrospection
-    # operations_class = DatabaseOperations
+    # introspection_class = DatabaseIntrospection Serge
+    # operations_class = DatabaseOperations Serge
     # client_class = DatabaseClient
 
     def __init__(self, *args, **kwargs):
