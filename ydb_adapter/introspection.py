@@ -46,7 +46,7 @@ class DatabaseIntrospection(BaseDatabaseIntrospection):
             scale=row[5],
             null_ok=row[6],
             default=row[7]
-        ) for row in cursor.fetchall()] # Need to find out if YDB supports collation?
+        ) for row in cursor.fetchall()]  # Need to find out if YDB supports collation?
 
     def get_relations(self, cursor, table_name: str) -> Dict[str, Any]:
         """
