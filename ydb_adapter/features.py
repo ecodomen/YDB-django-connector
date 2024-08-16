@@ -20,5 +20,5 @@ class DatabaseFeatures(BaseDatabaseFeatures):
     supports_temporal_subtraction = True
 
     def supports_transactions(self):
-        # Пример проверки версии базы данных для определения поддержки транзакций
+        # Example of checking the database version to determine transaction support
         return self.connection.server_version >= (2, 0)
