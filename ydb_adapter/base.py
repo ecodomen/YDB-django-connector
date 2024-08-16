@@ -1,9 +1,11 @@
 from django.db.backends.base.base import BaseDatabaseWrapper
 import ydb
 
-from ydb_adapter.crud import DatabaseCreation
+from ydb_adapter.client import DatabaseClient
+from ydb_adapter.creation import DatabaseCreation
 from ydb_adapter.features import DatabaseFeatures
 from ydb_adapter.introspection import DatabaseIntrospection
+from ydb_adapter.schema_editor import DatabaseSchemaEditor
 
 
 class DatabaseWrapper(BaseDatabaseWrapper):
@@ -15,10 +17,10 @@ class DatabaseWrapper(BaseDatabaseWrapper):
     features_class = DatabaseFeatures
     creation_class = DatabaseCreation
     introspection_class = DatabaseIntrospection
+    schema_editor_class = DatabaseSchemaEditor
+    client_class = DatabaseClient
     # TODO: Implement the remaining necessary classes
-    # schema_editor_class = DatabaseSchemaEditor
     # operations_class = DatabaseOperations
-    # client_class = DatabaseClient
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
